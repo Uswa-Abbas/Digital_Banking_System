@@ -1,0 +1,2 @@
+wajeeha javed,CUS123,1234567890123,shoukat javed,20,12000
+wajeeha javed,CUS098,0987654321123,shoukat javed,20,130000
