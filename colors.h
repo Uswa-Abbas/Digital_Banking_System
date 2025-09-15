@@ -14,4 +14,4 @@ const string Bold = "\033[1m";
 const string Reset = "\033[0m";
 
 
-#endif  
+#endif

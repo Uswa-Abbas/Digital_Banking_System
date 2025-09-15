@@ -1,5 +1,5 @@
 #include "customer.h"
-// #include "colors.h"
+#include "colors.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -26,7 +26,7 @@ Customer::Customer(std::string cusID, std::string cusName, std::string cn, int a
     income = inc;
     fatherName = fathern;
 
-    customerID = "CUS" + cn.substr(0, 3); // to generate customer ID
+    customerID = "CUS" + cn; // to generate customer ID
 }
 
 
@@ -55,7 +55,6 @@ void Customer::setCustomerInfo()
 
     cin.ignore();
 
-    customerID = "CUS" + cnic.substr(0, 3); // to generate customer ID
 
     ofstream fout("customer.txt", ios::app);
     if (fout.is_open())
@@ -64,7 +63,6 @@ void Customer::setCustomerInfo()
             << "," << fatherName << "," << age << "," << income << endl;
 
         fout.close();
-        cout << "Customer information is saved sucessfully \n";
     }
     else
     {
@@ -73,8 +71,9 @@ void Customer::setCustomerInfo()
     }
 }
 
-void Customer::getCustomerInfo()const
+void Customer::getCustomerInfo()
 {
+    customerID = generatecustomerID();
     cout << "Customer Name :" << customerName << endl;
     cout << "Customer ID :" << customerID << endl;
     cout << "Customer CNIC :" << cnic << endl;
@@ -84,14 +83,14 @@ void Customer::getCustomerInfo()const
     cout << "Customer income :" << income << endl;
 }
 
-void Customer::getCustomerByCNIC(string searchCNIC)const
+bool Customer::getCustomerByCNIC(std::string searchCNIC)
 {
+    customerID = generatecustomerID();
     bool found = false;
     string cusName, cusID, cusCNIC, cusFather, ageStr, incomeStr;
     ifstream fin("customer.txt");
     if (fin.is_open())
     {
-
         while (getline(fin, cusName, ',') &&
             getline(fin, cusID, ',') &&
             getline(fin, cusCNIC, ',') &&
@@ -99,27 +98,24 @@ void Customer::getCustomerByCNIC(string searchCNIC)const
             getline(fin, ageStr, ',') &&
             getline(fin, incomeStr))
         {
-
             if (cusCNIC == searchCNIC)
             {
-                cout << "Customer Name :" << cusName << endl;
-                cout << "Customer ID :" << cusID << endl;
-                cout << "Customer CNIC :" << cusCNIC << endl;
-
-                cout << "Father's Name :" << cusFather << endl;
-                cout << "Customer age :" << ageStr << endl;
-                cout << "Customer income :" << incomeStr << endl;
-                found = true;
-                break;
+                cout << "Customer Name :" << cusName << std::endl;
+                cout << "Customer ID :" << cusID << std::endl;
+                cout << "Customer CNIC :" << cusCNIC << std::endl;
+                cout << "Father's Name :" << cusFather << std::endl;
+                cout << "Customer age :" << ageStr << std::endl;
+                cout << "Customer income :" << incomeStr << std::endl;
+                return true;
             }
         }
+        cout << "This CNIC is not present\n";
+        return false;
     }
     else
     {
-        cout << "ERROR in opening file " << endl;
-    }
-    if (!found) {
-        cout << "this CNIC is not present \n";
+        cout << "ERROR in opening file " << std::endl;
+        return false;
     }
 }
 
@@ -139,5 +135,13 @@ string Customer::getCustomerCNIC()const {
 
 
 
-
-
+string Customer::generatecustomerID()
+{
+    string cusID = "CUS";
+    for (int i = 0; i < 3; i++) { // 12 random digits
+        int digit = rand() % 10;
+        cusID += to_string(digit);
+    }
+    cusID += to_string(time(0) % 10); // last 4 digits from time
+    return cusID;
+}

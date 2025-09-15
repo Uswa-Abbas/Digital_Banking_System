@@ -13,16 +13,16 @@
 
 using namespace std;
 
- 
-Transaction::Transaction(){
+
+Transaction::Transaction() {
 	transactionID = "";
 	date_time = "";
 	accountID = "";
-	amount=0.0;
+	amount = 0.0;
 	type = "";
 }
 
-void Transaction::recordTransaction(string accID,string t, double amt) {
+void Transaction::recordTransaction(string accID, string t, double amt) {
 
 	accountID = accID;
 	type = t;
@@ -40,7 +40,7 @@ void Transaction::transactionHistory(std::string accID)const {
 		cout << "Transaction ID : " << transactionID << endl;
 		cout << "Account ID : " << accountID << endl;
 		cout << "Type : " << type << endl;
-		cout << "Amount : " << amount<< endl;
+		cout << "Amount : " << amount << endl;
 		cout << "Date/Time : " << date_time << endl;
 
 	}
@@ -73,7 +73,7 @@ void Transaction::update(double newAmount, const std::string& newType) {
 
 		if (txn.transactionID == transactionID) {
 
-			txn.type = newType ;
+			txn.type = newType;
 			txn.amount = newAmount;
 		}
 
@@ -147,7 +147,7 @@ double Transaction::stringToDouble(const string& s) {
 	}
 
 
-	for (;i<(int)s.size();++i) {
+	for (; i < (int)s.size(); ++i) {
 		if (s[i] == '.') {
 			decimal = true;
 			continue;
@@ -171,7 +171,7 @@ double Transaction::stringToDouble(const string& s) {
 void Transaction::saveToFile()const {
 	ofstream fout("transaction.txt", ios::app);
 	if (!fout) {
-		cout <<Red<< "Error in opening file"<<Reset;
+		cout << Red << "Error in opening file" << Reset;
 		return;
 	}
 
@@ -200,6 +200,3 @@ void Transaction::loadAllTransactions() {
 	fin.close();
 	cout << Green << "All data load safely from transaction file" << Reset << endl;
 }
-
-
-

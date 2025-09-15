@@ -7,7 +7,7 @@
 
 class Transaction {
 
- 
+
 protected:
     std::string transactionID;
     std::string date_time;
@@ -18,15 +18,15 @@ protected:
 
 public:
 
-    
+
 
     Transaction();
     void recordTransaction(std::string accountID, std::string type, double amount);
     void transactionHistory(std::string accountID)const;
-    void update(double newAmount, const std::string& newType );   
+    void update(double newAmount, const std::string& newType);
     std::string generateTransactionID();
     std::string getCurrentDateTime();
-    std::vector<std::string> split (const std::string& s, char delimiter);
+    std::vector<std::string> split(const std::string& s, char delimiter);
     double stringToDouble(const std::string& s);
     void saveToFile()const;
     void loadAllTransactions();

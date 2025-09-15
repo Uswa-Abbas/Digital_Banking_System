@@ -1,36 +1,37 @@
-#include"account.h"
 #define _CRT_SECURE_NO_WARNINGS
+#include"account.h"
+
 
 
 
 void Account::openAccount() {
 	cout << "\n=====================================\n";
-	cout << "          Opening New Account          \n";
+	cout << Yellow << "          Opening New Account          \n" << Reset;
 	cout << "=====================================\n";
 
 
 
 	//Customer ID
-	 
-	cout << "Enter your Customer ID :";
-	cin >> customerID;
+	string CNIC;
+	cout << "Enter your Customer CNIC :";
+	cin >> CNIC;
 
-	ifstream fin("customer.txt"); 
-	bool found = false;          
+	ifstream fin("customer.txt");
+	bool found = false;
 
-	if (fin.is_open()) 
+	if (fin.is_open())
 	{
-		string name, id, cnic, father, age, income;
+		string name, id, Cnic, father, age, income;
 
-		
+
 		while (getline(fin, name, ',') &&
 			getline(fin, id, ',') &&
-			getline(fin, cnic, ',') &&
+			getline(fin, Cnic, ',') &&
 			getline(fin, father, ',') &&
 			getline(fin, age, ',') &&
 			getline(fin, income))
 		{
-			if (id == customerID) {
+			if (Cnic == CNIC) {
 				found = true;
 				break;
 			}
@@ -40,15 +41,15 @@ void Account::openAccount() {
 		fin.close();
 	}
 	else {
-		cout << "ERROR: customer.txt file not found!\n";
+		cout << Red << "ERROR: customer.txt file not found!\n" << Reset;
 		return;
 	}
 	if (!found) {
-		cout << "Invalid Customer ID! Account cannot be created.\n";
+		cout << Red << "Invalid Customer ID! Account cannot be created.\n" << Reset;
 		return;
 	}
 
-	cout << "Customer ID verified successfully. Proceeding...\n";
+	cout << Green << "Customer ID verified successfully. Proceeding...\n" << Reset;
 
 
 
@@ -57,11 +58,10 @@ void Account::openAccount() {
 	bool validType = false;
 	while (!validType)
 	{
-		cout << "Enter Account Type (Personal/Business/Company):";
+		cout << "Enter Account Type (Personal/Company):";
 		cin >> account_type;
 
 		if (account_type == "Personal" || account_type == "personal" ||
-			account_type == "Business" || account_type == "business" ||
 			account_type == "Company" || account_type == "company"
 			)
 		{
@@ -69,7 +69,7 @@ void Account::openAccount() {
 		}
 		else
 		{
-			cout << "Invalid type! Please enter 'Personal' or 'Business' or 'Company'.\n ";
+			cout << Red << "Invalid type! Please enter 'Personal'  or 'Company'.\n " << Reset;
 		}
 	}
 
@@ -81,10 +81,10 @@ void Account::openAccount() {
 		cout << "Enter Initial Balance (should not be less than 0): ";
 		cin >> balance;
 		if (balance < 0) {
-			cout << "Balance cannot be negative. Try again.\n";
+			cout << Red << "Balance cannot be negative. Try again.\n" << Reset;
 		}
 	} while (balance < 0);
-	
+
 
 
 
@@ -100,12 +100,12 @@ void Account::openAccount() {
 	IBAN = generateIBAN(accountID);
 
 
- //Save account details into file
+	//Save account details into file
 
 	ofstream fout("Account.txt", ios::app); // append mode
 	if (fout.is_open()) {
-		fout<< "CustomerID:" << customerID << ","
-		   	<< "Type:" << account_type << ","
+		fout << "CustomerID:" << customerID << ","
+			<< "Type:" << account_type << ","
 			<< "AccountID:" << accountID << ","
 			<< "IBAN:" << IBAN << ","
 			<< "Balance:" << balance << ","
@@ -113,13 +113,13 @@ void Account::openAccount() {
 		fout.close();
 	}
 	else {
-		cout << "Error: Unable to open file for saving account.\n";
+		cout << Red << "Error: Unable to open file for saving account.\n" << Reset;
 	}
- 
 
-}   
 
-   //generate AccountID
+}
+
+//generate AccountID
 
 string Account::generateAccountID()
 {
@@ -132,15 +132,15 @@ string Account::generateAccountID()
 	return accNum;
 }
 
-     
+
 //generate IBAN 
 
 string  Account::generateIBAN(const string& accountID)
 {
 	int checkNum = rand() % 9 + 1;
 	string bankCode = "MSGL";
-    string iban= "PK" + to_string(checkNum)+ bankCode + accountID;
-	
+	string iban = "PK" + to_string(checkNum) + bankCode + accountID;
+
 	return iban;
 }
 
@@ -171,20 +171,3 @@ string Account::getAccountID() const {
 string Account::getIBAN() const {
 	return IBAN;
 }
-
-
-
-
-
-
-	
-
-
-
-
-
-
-
-
-
-

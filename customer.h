@@ -8,13 +8,10 @@
 
 class Customer {
 
-protected:
+private:
 	std::string customerID;
 	std::string customerName;
 	std::string cnic;
-
-
-private:
 	int age;
 	double income;
 	std::string fatherName;
@@ -24,9 +21,9 @@ public:
 	Customer(std::string cusID, std::string cusName, std::string cn, int a, double inc, std::string fathern);
 
 
-	void getCustomerInfo()const;
+	void getCustomerInfo();
 
-	void getCustomerByCNIC(std::string searchCNIC)const;
+	bool getCustomerByCNIC(std::string searchCNIC);
 
 	void setCustomerInfo();
 
@@ -36,6 +33,8 @@ public:
 
 	std::string getCustomerCNIC()const;
 
+	std::string generatecustomerID();
+	virtual ~Customer() = default;  // Add virtual destructor for safety
 
 
 };
